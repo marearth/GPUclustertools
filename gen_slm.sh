@@ -1,7 +1,7 @@
 #!/bin/bash
 #gen_slm.sh p1 p2
 #p1 name of job must
-#p2 name of docker image optional default:bit:5000/niezw_pytorch14_py37_cuda101
+#p2 name of docker image optional default:bit:5000/deepo
 
 #example
 #must run under root_folder_of_source_code
@@ -17,7 +17,7 @@
 
 if [ $# -le 1 ]
 then
-echo "Not enough arguments"
+echo "ERROR:Not enough arguments!"
 exit 1
 fi  
 echo "#!/bin/bash" > $1.slm
@@ -44,6 +44,6 @@ then
 echo $2  >> $1_exec.sh
 echo "startdocker -D /gdata/${USER} -P /ghome/${USER} -s ${cwd:13}/$1_exec.sh -u \"--privileged --ipc=host -v /gpub:/gpub -w=\"$cwd\"\" $3" '&>' $1_record.txt >> $1.slm
 else
-echo "Too many arguments"
+echo "ERROR:Too many arguments!"
 exit 2
 fi
