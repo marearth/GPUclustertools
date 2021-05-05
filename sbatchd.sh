@@ -1,38 +1,52 @@
 #!/bin/bash
 #set -x
 #submit slm file in a elegant delay
-#sbatchd p1 
-#p1 name_of_job.slm 
+#sbatchd p1 p2
+#p1 name_of_job.slm must
+#p2 number of available jobs  optional  default:4
 
 #example
-#avoid waiting by running in the backhround
+#avoid waiting by running in the background
 #sbatchd test_job.slm &
 #generate submission infromation in the sbatch_test_job_info.txt file
 #example
 
 #edited
 #2021/4/25  11:57:30
+#2021/5/5   19:52:30
 
 next_sign=0
 curr_sign=0
 job_num=0
+capacity=4
+
 if [ $# -eq 0 ]
 then
-    echo "error:not enough arguments"
+    echo "ERROR:not enough arguments!"
     exit 2
 fi
+
+if [ $# -eq 2 ];then
+    re='[0-9]'
+    if ! [[ $2 =~ $re ]];then
+        echo "ERROR:not valid argument!"
+        exit 3
+    fi
+    capacity=$2
+fi
+
 while true
 do
     curr_sign=0
     job_num=$(squeue | grep "compute" | wc -l)
-    if [ $job_num -lt 4 ]
+    if [ $job_num -lt $capacity ]
     then
         curr_sign=1
     fi
     sleep 15m
     job_num=$(squeue | grep "compute" | wc -l)
     next_sign=0
-    if [ $job_num -lt 4 ]
+    if [ $job_num -lt $capacity ]
     then
         next_sign=1
     fi
@@ -40,7 +54,7 @@ do
     then
         if [ ${1: -4} != ".slm" ]
         then
-            echo "error:invalid input format"
+            echo "ERROR:invalid input format!"
             exit 1
         fi
         now="$(date)"
