@@ -19,10 +19,21 @@
 #edited in 2021/03/20 11:10:00
 #edited in 2021/04/25 10:58:00
 #edited in 2021/05/02 11:14:30
+#edited in 2021/05/05 19:30:30
+
+if [ $# -eq 0 ];then
+   echo "ERROR:not enough arguments!"
+   exit 2
+fi
 
 echo "#PBS -N $1" > $1.pbs
 echo "#PBS -o ${HOME}/console/$1.out" >> $1.pbs
 echo "#PBS -e ${HOME}/console/$1.err" >> $1.pbs
+
+if [ $# -eq 1 ];then
+   echo "#PBS -l nodes=1:gpus=1:S" >> $1.pbs
+fi
+
 if [ $# -ge 2 ]
 then
 case $2 in
@@ -38,15 +49,12 @@ case $2 in
 '4C') echo "#PBS -l nodes=1:gpus=4:C" >> $1.pbs;;
 '8F') echo "#PBS -l nodes=1:gpus=8:F" >> $1.pbs;;
 *)
-   echo "Not avaliable gpus"
+   echo "ERROR:Not available gpus!"
    exit 1
    ;;
 esac 
 fi
-if [ $# -eq 1 ]
-then
-echo "#PBS -l nodes=1:gpus=1:S" >> $1.pbs
-fi
+
 echo "#PBS -r y" >> $1.pbs
 echo 'cd  $PBS_O_WORKDIR'  >> $1.pbs
 echo "echo Time is \$('date')">> $1.pbs
