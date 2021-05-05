@@ -3,7 +3,7 @@
 #submit slm file in a elegant delay
 #sbatchd p1 p2
 #p1 name_of_job.slm must
-#p2 number of available jobs  optional  default:4
+#p2 maximum number of available jobs  optional  default:4
 
 #example
 #avoid waiting by running in the background
