@@ -34,7 +34,9 @@ gcheck 3
 ```
 Following picture shows the snapshot result of gcheck.
 ![snapshot_result](https://github.com/marearth/GPUclustertools/blob/main/gcheck_snapshot.png)
+
 Check real GPU consumption by job of name. RUN the following code.
+
 ```
 jbn name_of_job
 #example
