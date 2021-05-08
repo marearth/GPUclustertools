@@ -1,11 +1,12 @@
 #!/bin/bash
 #gen_slm.sh p1 p2
 #p1 name of job must
-#p2 name of docker image optional default:bit:5000/deepo
+#p2 invoked commands
+#p3 name of docker image optional default:bit:5000/deepo(can be customized to suit your needs)
 
 #example
 #must run under root_folder_of_source_code
-#gen_slm.sh test_job "bit:5000/deepo"
+#gen_slm.sh test_job "python ./execution.sh" "bit:5000/deepo"
 #generate job_name.pbs job_name_exec.sh(execution script of invoked commands) job_name_record.txt(output of program)
 #append_env.sh can be changed to suit your needs(or commented out)
 #output path of job_name.out(.err) should be changed  to suit your needs
@@ -14,6 +15,7 @@
 #edited
 #2021/04/25 11:24:30
 #2021/05/02 11:17:30
+#2021/05/08 17:26:30
 
 if [ $# -le 1 ]
 then
@@ -29,7 +31,8 @@ echo "\"Running on node \"\$SLURM_JOB_NODELIST" >>$1.slm
 echo "echo \"Allocate Gpu Units:\"\$CUDA_VISIBLE_DEVICES"  >>$1.slm
 echo "##program here ##" >>$1.slm
 
-cat /ghome/niezw/source/script/shell/append_env.sh > $1_exec.sh
+s_path=$(dirname "$BASH_SOURCE")
+cat ${s_path}/append_env.sh > $1_exec.sh
 sed -i "1a\a_HOME=${HOME}"  $1_exec.sh
 
 
