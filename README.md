@@ -22,7 +22,7 @@ gslm test_gpu  "python ./execution.sh" "bit:5000/deepo"
 Submit slm file in a delayed time to make GPU rest for a while. RUN the following code.
 ```
 sbd name_of_slm.slm max_number_of_available_jobs interval_time_between_scanning
-exmaple
+#exmaple
 sbd test_gpu.slm &
 ```
 Check statistical information of state of jobs for specified type of GPU. RUN the following code.
@@ -33,6 +33,7 @@ gcheck encoded_number
 gcheck 3
 ```
 Following picture shows the snapshot result of gcheck.
+
 ![snapshot_result](https://github.com/marearth/GPUclustertools/blob/main/gcheck_snapshot.png)
 
 Check real GPU consumption by job of name. RUN the following code.
