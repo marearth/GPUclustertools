@@ -1,9 +1,10 @@
 #!/bin/bash
 #set -x
 #submit slm file in a elegant delay
-#sbatchd p1 p2
+#sbatchd p1 p2 p3
 #p1 name_of_job.slm must
 #p2 maximum number of available jobs  optional  default:4
+#p3 interval time between scanning(minute) optional default:15
 
 #example
 #avoid waiting by running in the background
@@ -14,11 +15,13 @@
 #edited
 #2021/4/25  11:57:30
 #2021/5/5   19:52:30
+#2021/5/6   22:44:30
 
 next_sign=0
 curr_sign=0
 job_num=0
 capacity=4
+sleep_time=15
 
 if [ $# -eq 0 ]
 then
@@ -35,6 +38,15 @@ if [ $# -eq 2 ];then
     capacity=$2
 fi
 
+if [ $# -gt 2 ];then
+    re='[0-9][0-9]'
+    if ! [[ $3 =~ $re ]];then
+        echo "ERROR:not valid argument!"
+        exit 4
+    fi
+    sleep_time=$3
+fi
+
 while true
 do
     curr_sign=0
@@ -43,7 +55,7 @@ do
     then
         curr_sign=1
     fi
-    sleep 15m
+    sleep ${sleep_time}m
     job_num=$(squeue | grep "compute" | wc -l)
     next_sign=0
     if [ $job_num -lt $capacity ]
