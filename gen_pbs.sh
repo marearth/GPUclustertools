@@ -3,7 +3,7 @@
 #parameter p1 indicates the job name of pbs file  must
 #parameter p2 indicates the number and type of used gpus optional (1S 2D 4Q 1s 2d 4q 8e 1A 2B 4C 8F) default: 1S 
 #parameter p3 indicates invoked script    optional  default: empty
-#parameter p4 indicates invoked image     optional default: bit:5000/deepo
+#parameter p4 indicates invoked image     optional default: bit:5000/deepo(can be customized to suit your needs)
 
 #example:
 #run under root_folder_of_source_code 
@@ -20,6 +20,7 @@
 #edited in 2021/04/25 10:58:00
 #edited in 2021/05/02 11:14:30
 #edited in 2021/05/05 19:30:30
+#edited in 2021/05/08 17:28:30
 
 if [ $# -eq 0 ];then
    echo "ERROR:not enough arguments!"
@@ -66,7 +67,8 @@ echo "echo -n \"Gpus:\"" >> $1.pbs
 echo 'cat $PBS_GPUFILE' >> $1.pbs
 echo "echo \"CUDA_VISIBLE_DEVICES:\"\$CUDA_VISIBLE_DEVICES"  >>$1.pbs 
 
-cat ${HOME}/.local/bin/append_env.sh > $1_exec.sh
+s_path=$(dirname "$BASH_SOURCE")
+cat ${s_path}/append_env.sh > $1_exec.sh
 sed -i "1a\a_HOME=${HOME}"  $1_exec.sh
 
 chmod +x $1_exec.sh
