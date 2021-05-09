@@ -33,14 +33,17 @@ gcheck encoded_number
 #example
 gcheck 3
 ```
-Following picture shows the snapshot result of gcheck.
+Following picture shows the snapshot result of gcheck command.
 
-![snapshot_result](https://github.com/marearth/GPUclustertools/blob/main/gcheck_snapshot.png)
+![snapshot_gcheck_result](https://github.com/marearth/GPUclustertools/blob/main/gcheck_snapshot.png)
 
 Check real GPU consumption by job of name. RUN the following code.
 
 ```
-jbn name_of_job
+jbn name_of_job user_name(optional)
 #example
-jbn test_gpu
+jbn cost_multi xugk
 ```
+Following picture shows the snapshot result of jbn command.
+
+![snapshot_jbn_result](https://github.com/marearth/GPUclustertools/blob/main/jbn_snapshot_result.png)
