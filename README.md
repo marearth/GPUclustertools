@@ -7,7 +7,7 @@ Run the following command in shell
 ```
 Before installation ,you can configure installation path and aliases of invoked scripts in the configuration.conf file.
 ## Usage
-For the first use,you should source ~/.bash_aliases in the current shell after installation.
+For the first use,you should __source ~/.bash_aliases__ in the current shell after installation.
 
 Generate pbs or slm format configuration file and relevant files with one line of code. You can check source code for detailed information.
 ```
