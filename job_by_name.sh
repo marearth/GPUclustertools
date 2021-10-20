@@ -13,6 +13,7 @@
 #2021/04/25 11:36:00
 #2021/05/02 12:56:30
 #2021/05/09 08:39:00
+#2021/10/20 17:23:00 optimize location of query GPU
 
 ur=$USER
 if [ $# -eq 0 ]
@@ -41,7 +42,8 @@ then
   gpus=`echo $field9 | cut -d- -f2`
   IFS="/" read -ra arr <<< "$gpus"
   
-  jr1=`(chk_gpuused $node | awk '/Default/ {print (NR-10)/3,$0}')`
+  jr1=`(chk_gpuused $node | awk '/Default/ {print $0}')`
+  jr2=`(echo "$jr1" | awk '/Default/ {print NR-1,$0}')`
   total=${#arr[*]}
   echo "Gpu consumption INFO. of submitted job:"
   for (( i=0; i<=$(( $total -1 )); i++ ))
@@ -50,7 +52,7 @@ then
   then 
     continue
   fi
-  echo "$jr1" | awk -v var="${arr[$i]}" '$1 == var {print $0}'
+  echo "$jr2" | awk -v var="${arr[$i]}" '$1 == var {print $0}'
   done
 else
   echo "this is no job for query"
