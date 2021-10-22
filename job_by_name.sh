@@ -14,6 +14,7 @@
 #2021/05/02 12:56:30
 #2021/05/09 08:39:00
 #2021/10/20 17:23:00 optimize location of query GPU
+#2021/10/22 15:08:00 add display of order of query job in the queue
 
 ur=$USER
 if [ $# -eq 0 ]
@@ -35,7 +36,14 @@ then
   field9="`echo $jr | awk '{ print $9 }'`" 
   if [ -z "$field9" ]
   then
-    echo "the job is not OK,Please wait for some Time"
+    field4="`echo $jr | awk '{ print $4 }'`"
+    field_id="`echo $jr | awk '{ print $1 }'`"
+    gpu_type=`echo $field4 | cut -d= -f2`
+    queue_info=`(echo "$gpu_info"  | grep "1:gpus" | grep "$gpu_type" | awk '$7 == "Q" {print $0}')`
+    queue_line=`(echo "$queue_info" | awk '{print NR,$0}')`
+    total_queue_jobs="$(echo "$queue_line" | wc -l)"
+    job_location=`(echo "$queue_line" | awk -v var="$field_id" '$2 == var {print $1}')`
+    echo "The job is queuing. Job order in the queue is ${job_location} / ${total_queue_jobs}. Please wait for a while."
     exit 1
   fi
   node=`echo $field9 | cut -d- -f1` 
