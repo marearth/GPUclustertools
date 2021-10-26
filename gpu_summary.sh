@@ -10,25 +10,28 @@
 #example
 
 #edited 
+#GMT+8 
 #2021/4/25 11:49:30 update usage comments
 #2021/4/27 10:51:30 fixed resources conflict
 #2021/4/27 20:32:30 optimized performance by reducing disk I/O
 #2021/5/02 20:45:30 add 8:E type gpu
+#2021/10/26 12:23:00 optimize output of gpu queue and used gpu information
 
 start=`date +%s`
 
-gf=`chk_gpu`
-gf1=$gf
-gf2=$gf
+# gf=`chk_gpu`
+# gf1=$gf
+# gf2=$gf
+__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "-------------------Number of GPU jobs--------------------"
 (
 
-echo "$gf1" | sed -n '/GPU used detail/,$p'
+bash ${__dir}/gpu_used.sh
 ) > gs1_info.txt &
 
 (
-echo "$gf2"  | grep "1:gpus" | awk '$7 == "Q" {print $4}'
+bash ${__dir}/tqueue.sh  | grep "1:gpus" | awk '$7 == "Q" {print $4}'
 ) > gs2_info.txt &
 
 wait

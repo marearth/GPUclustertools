@@ -10,12 +10,13 @@
 #example
 
 #edited
+#GMT+8
 #2021/04/25 11:36:00
 #2021/05/02 12:56:30
 #2021/05/09 08:39:00
 #2021/10/20 17:23:00 optimize location of query GPU
 #2021/10/22 15:08:00 add display of order of query job in the queue
-
+#2021/10/26 12:23:00 optimize output of gpu queue information
 ur=$USER
 if [ $# -eq 0 ]
 then
@@ -27,8 +28,9 @@ if [ $# -gt 1 ]
 then
   ur=$2
 fi
-
-jr=`(chk_gpu | grep $ur | grep $1)`
+__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+gpu_info="$(bash ${__dir}/tqueue.sh)"
+jr=`(echo "$gpu_info" | grep $ur | grep $1)`
 if ! [ -z "$jr" ]
 then 
   echo "Node INFO. of submitted job:"
