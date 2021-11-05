@@ -31,7 +31,7 @@ then
 fi
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 gpu_info="$(bash ${__dir}/tqueue.sh)"
-jr=`(echo "$gpu_info" | grep $ur | awk -v var="$1" '$3 == var' | awk '$7 == "Q", $7 == "R" {print $0}')`
+jr=`(echo "$gpu_info" | grep $ur | awk -v var="$1" '$3 == var' | awk '$7 == "Q" || $7 == "R" {print $0}')`
 if ! [ -z "$jr" ]
 then 
   echo "Node INFO. of submitted job:"
