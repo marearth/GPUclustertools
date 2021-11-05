@@ -47,3 +47,15 @@ jbn cost_multi xugk
 Following picture shows the snapshot result of jbn command.
 
 ![snapshot_jbn_result](https://github.com/marearth/GPUclustertools/blob/main/jbn_snapshot_result.png)
+
+
+Check submitted jobs of user in a relatively quick way. RUN the following code.
+
+```
+jbu user_name(optional)
+#example
+jbu xugk
+```
+Following picture shows the snapshot result of jbu command.
+
+![snapshot_jbu_result](https://github.com/marearth/GPUclustertools/blob/main/jbu_snapshot_result.png)
