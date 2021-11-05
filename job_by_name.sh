@@ -17,6 +17,7 @@
 #2021/10/20 17:23:00 optimize location of query GPU
 #2021/10/22 15:08:00 add display of order of query job in the queue
 #2021/10/26 12:23:00 optimize output of gpu queue information
+#2021/11/05 10:38:00 fix type of job for filtering
 ur=$USER
 if [ $# -eq 0 ]
 then
@@ -30,7 +31,7 @@ then
 fi
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 gpu_info="$(bash ${__dir}/tqueue.sh)"
-jr=`(echo "$gpu_info" | grep $ur | grep $1)`
+jr=`(echo "$gpu_info" | grep $ur | awk -v var="$1" '$3 == var' | awk '$7 == "Q", $7 == "R" {print $0}')`
 if ! [ -z "$jr" ]
 then 
   echo "Node INFO. of submitted job:"
