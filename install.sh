@@ -17,20 +17,26 @@ else
     exit 2
 fi
 
-if [ -f "${HOME}/.bash_aliases" ];then
-    echo "alias ${gen_pbs_sh}=\"${install_path}/gen_pbs.sh\"" >> ${HOME}/.bash_aliases
-    echo "alias ${gen_slm_sh}=\"${install_path}/gen_slm.sh\"" >> ${HOME}/.bash_aliases
-    echo "alias ${job_by_name_sh}=\"${install_path}/job_by_name.sh\"" >> ${HOME}/.bash_aliases
-    echo "alias ${job_by_user_sh}=\"${install_path}/job_by_user.sh\"" >> ${HOME}/.bash_aliases
-    echo "alias ${gpu_summary_sh}=\"${install_path}/gpu_summary.sh\"" >> ${HOME}/.bash_aliases
-    echo "alias ${sbatchd_sh}=\"${install_path}/sbatchd.sh\"" >> ${HOME}/.bash_aliases
+cd $install_path
+ln -s ./gen_pbs.sh ${gen_pbs_sh}
+ln -s ./gen_slm_sh ${gen_slm_sh}
+ln -s ./job_by_name.sh ${job_by_name_sh}
+ln -s ./job_by_user.sh ${job_by_user_sh}
+ln -s ./gpu_summary.sh ${gpu_summary_sh}
+ln -s ./sbatchd.sh ${sbatchd_sh}
+
+if [ -f "${HOME}/.bashrc" ];then
+    echo " " >> ${HOME}/.bashrc
+    echo " " >> ${HOME}/.bashrc
+    echo "# begin:append execution PATH of GPUclustertools" >> ${HOME}/.bashrc
+    echo "export PATH=${install_path}:\$PATH" >> ${HOME}/.bashrc
+    echo "# end:append execution PATH of GPUclustertools" >> ${HOME}/.bashrc
 else
-    touch ${HOME}/.bash_aliases
-    echo "alias ${gen_pbs_sh}=\"${install_path}/gen_pbs.sh\"" >> ${HOME}/.bash_aliases
-    echo "alias ${gen_slm_sh}=\"${install_path}/gen_slm.sh\"" >> ${HOME}/.bash_aliases
-    echo "alias ${job_by_name_sh}=\"${install_path}/job_by_name.sh\"" >> ${HOME}/.bash_aliases
-    echo "alias ${job_by_user_sh}=\"${install_path}/job_by_user.sh\"" >> ${HOME}/.bash_aliases
-    echo "alias ${gpu_summary_sh}=\"${install_path}/gpu_summary.sh\"" >> ${HOME}/.bash_aliases
-    echo "alias ${sbatchd_sh}=\"${install_path}/sbatchd.sh\"" >> ${HOME}/.bash_aliases
+    touch ${HOME}/.bashrc
+    echo " " >> ${HOME}/.bashrc
+    echo " " >> ${HOME}/.bashrc
+    echo "# begin:append execution PATH of GPUclustertools" >> ${HOME}/.bashrc
+    echo "export PATH=${install_path}:\$PATH" >> ${HOME}/.bashrc
+    echo "# end:append execution PATH of GPUclustertools" >> ${HOME}/.bashrc
 fi
-echo "Program has been successfully installed! You need to source .bash_aliases file before the first use.Please check README.md for use."
+echo "Program has been successfully installed! You need to source .bashrc file before the first use.Please check README.md for use."

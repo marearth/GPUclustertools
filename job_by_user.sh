@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+# set -x
 #display all submitted jobs by user name in a quick way
 #./job_by_user.sh p1
 #p1 name of user optional
