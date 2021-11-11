@@ -17,6 +17,7 @@
 #2021/5/02 20:45:30 add 8:E type gpu
 #2021/10/26 12:23:00 optimize output of gpu queue and used gpu information
 #2021/11/05 14:30:00 optimize cache file and display of type of job
+#2021/11/11 15:52:00 add support for RTX 3080 Ti GPU
 
 start=`date +%s`
 
@@ -59,7 +60,12 @@ case $1 in
         num_single="$(echo  "$ginfo"  | grep  "[1-9][0-9][0-9](A)" | grep -o '[ ]' | wc -l)"
         nfg="$(echo  "$ginfo" |  grep  "[1-9][0-9][0-9](A)" | grep -o '[ ]\|[x]' | wc -l)"
         w_jobs="$(echo "$qinfo" | grep -o '1:A' | wc -l)"
-        echo $num_single $nfg $w_jobs
+
+        num_single_g="$(echo  "$ginfo"  | grep  "[1-9][0-9][0-9](G)" | grep -o '[ ]' | wc -l)"
+        nfg_g="$(echo  "$ginfo" |  grep  "[1-9][0-9][0-9](G)" | grep -o '[ ]\|[x]' | wc -l)"
+        w_jobs_g="$(echo "$qinfo" | grep -o '1:G' | wc -l)"
+
+        echo $num_single $nfg $w_jobs $num_single_g $nfg_g $w_jobs_g
         ) > ${__dir}/gs1.temp &
 
 
@@ -99,11 +105,12 @@ case $1 in
         IFS=" " read -ra r2 <<< "$(cat ${__dir}/gs2.temp)" 
         IFS=" " read -ra r3 <<< "$(cat ${__dir}/gs3.temp)" 
         IFS=" " read -ra r4 <<< "$(cat ${__dir}/gs4.temp)" 
-        echo "---Type of Job for RTX3090---        spare/total/waiting"
-        echo "number of jobs for single gpu(1A):       ${r1[0]}/${r1[1]}/${r1[2]}"
-        echo "number of jobs for double gpus(2B):      ${r2[0]}/${r2[1]}/${r2[2]}"
-        echo "number of jobs for quadruple gpus(4C):   ${r3[0]}/${r3[1]}/${r3[2]}"
-        echo "number of jobs for eight gpus(8F):       ${r4[0]}/${r4[1]}/${r4[2]}"
+        echo "---Type of Job for RTX 3090/RTX 3080 Ti---        spare/total/waiting"
+        echo "number of jobs for single gpu(1A):                    ${r1[0]}/${r1[1]}/${r1[2]}"
+        echo "number of jobs for single gpu(3080Ti:1G):             ${r1[3]}/${r1[4]}/${r1[5]}"
+        echo "number of jobs for double gpus(2B):                   ${r2[0]}/${r2[1]}/${r2[2]}"
+        echo "number of jobs for quadruple gpus(4C):                ${r3[0]}/${r3[1]}/${r3[2]}"
+        echo "number of jobs for eight gpus(8F):                    ${r4[0]}/${r4[1]}/${r4[2]}"
         ;;
     2)       
         (

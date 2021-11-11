@@ -21,6 +21,7 @@
 #edited in 2021/05/02 11:14:30
 #edited in 2021/05/05 19:30:30
 #edited in 2021/05/08 17:28:30
+#edited in 2021/11/11 15:52:00  add support for RTX 3080 Ti GPU
 
 if [ $# -eq 0 ];then
    echo "ERROR:not enough arguments!"
@@ -46,6 +47,7 @@ case $2 in
 '2d') echo "#PBS -l nodes=1:gpus=2:d" >> $1.pbs;;
 '4q') echo "#PBS -l nodes=1:gpus=4:q" >> $1.pbs;;
 '1A') echo "#PBS -l nodes=1:gpus=1:A" >> $1.pbs;;
+'1G') echo "#PBS -l nodes=1:gpus=1:G" >> $1.pbs;;
 '2B') echo "#PBS -l nodes=1:gpus=2:B" >> $1.pbs;;
 '4C') echo "#PBS -l nodes=1:gpus=4:C" >> $1.pbs;;
 '8F') echo "#PBS -l nodes=1:gpus=8:F" >> $1.pbs;;
