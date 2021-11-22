@@ -22,6 +22,7 @@
 #edited in 2021/05/05 19:30:30
 #edited in 2021/05/08 17:28:30
 #edited in 2021/11/11 15:52:00  add support for RTX 3080 Ti GPU
+#edited in 2021/11/22 12:18:00  release GPU resouces actively through torch and gc
 
 if [ $# -eq 0 ];then
    echo "ERROR:not enough arguments!"
@@ -72,6 +73,11 @@ echo "echo \"CUDA_VISIBLE_DEVICES:\"\$CUDA_VISIBLE_DEVICES"  >>$1.pbs
 s_path=$(dirname "$BASH_SOURCE")
 cat ${s_path}/append_env.sh > $1_exec.sh
 sed -i "1a\a_HOME=${HOME}"  $1_exec.sh
+
+#release GPU resouces actively through gc and torch 
+echo "python -c \"import gc;import torch;del model;gc.collect();torch.cuda.empty_cache()\"" >> $1_exec.sh
+# sleep some time(optional)
+# echo "sleep 600" >> $1_exec.sh
 
 chmod +x $1_exec.sh
 cwd=$(pwd)
