@@ -8,7 +8,7 @@ vs=`python -c 'import sys; print("{} {}".format(sys.version_info.major,sys.versi
 vs1=`echo $vs | cut -d ' ' -f 1`
 vs2=`echo $vs | cut -d ' ' -f 2`
 a_PYTHONPATH="${a_HOME}/.local/lib/python${vs1}.${vs2}/site-packages"
-
+export CUDA_CACHE_PATH=/tmp
 if [[ -v LIBRARY_PATH ]];then
   export LIBRARY_PATH=$LIBRARY_PATH:$a_LIBRARY_PATH
 else

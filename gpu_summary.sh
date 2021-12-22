@@ -18,12 +18,10 @@
 #2021/10/26 12:23:00 optimize output of gpu queue and used gpu information
 #2021/11/05 14:30:00 optimize cache file and display of type of job
 #2021/11/11 15:52:00 add support for RTX 3080 Ti GPU
+#2021/12/22 16:07:00 revert to chk_gpu command for dynamic changes
 
 start=`date +%s`
 
-# gf=`chk_gpu`
-# gf1=$gf
-# gf2=$gf
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 
@@ -31,7 +29,7 @@ echo "-------------------Number of GPU jobs--------------------"
 
 
 (
-bash ${__dir}/gpu_used.sh
+chk_gpu | sed -n '/GPU used detail/,$p'
 ) > ${__dir}/gs_gused_info.temp &
 
 (

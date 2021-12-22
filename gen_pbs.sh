@@ -23,6 +23,7 @@
 #edited in 2021/05/08 17:28:30
 #edited in 2021/11/11 15:52:00  add support for RTX 3080 Ti GPU
 #edited in 2021/11/22 12:18:00  release GPU resouces actively through torch and gc(require pytorch framework)
+#edited in 2021/12/22 16:18:00  fix memory overflow problem by configuring docker parameters and file deadlock by setting env. variable
 
 if [ $# -eq 0 ];then
    echo "ERROR:not enough arguments!"
@@ -84,11 +85,11 @@ cwd=$(pwd)
 if [ $# -eq 3 ]
 then
 echo $3  >> $1_exec.sh
-echo "startdocker -D /gdata/${USER} -P /ghome/${USER} -s ${cwd:13}/$1_exec.sh -u \"--privileged --ipc=host -v /gpub:/gpub -w=\"$cwd\"\" bit:5000/deepo" '&>' $1_record.txt >> $1.pbs
+echo "startdocker -D /gdata/${USER} -P /ghome/${USER} -s ${cwd:13}/$1_exec.sh -u \"--ipc=host --shm-size 64g -v /gpub:/gpub -w=\"$cwd\"\" bit:5000/deepo" '&>' $1_record.txt >> $1.pbs
 elif [ $# -eq 4 ]
 then
 echo $3  >> $1_exec.sh
-echo "startdocker -D /gdata/${USER} -P /ghome/${USER} -s ${cwd:13}/$1_exec.sh -u \"--privileged --ipc=host -v /gpub:/gpub -w=\"$cwd\"\" $4" '&>' $1_record.txt >> $1.pbs
+echo "startdocker -D /gdata/${USER} -P /ghome/${USER} -s ${cwd:13}/$1_exec.sh -u \"--ipc=host --shm-size 64g -v /gpub:/gpub -w=\"$cwd\"\" $4" '&>' $1_record.txt >> $1.pbs
 else
-echo "startdocker -D /gdata/${USER} -P /ghome/${USER} -s ${cwd:13}/$1_exec.sh -u \"--privileged --ipc=host -v /gpub:/gpub -w=\"$cwd\"\" bit:5000/deepo" '&>' $1_record.txt >> $1.pbs
+echo "startdocker -D /gdata/${USER} -P /ghome/${USER} -s ${cwd:13}/$1_exec.sh -u \"--ipc=host --shm-size 64g -v /gpub:/gpub -w=\"$cwd\"\" bit:5000/deepo" '&>' $1_record.txt >> $1.pbs
 fi
