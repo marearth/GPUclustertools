@@ -19,6 +19,7 @@
 #2021/11/05 14:30:00 optimize cache file and display of type of job
 #2021/11/11 15:52:00 add support for RTX 3080 Ti GPU
 #2021/12/22 16:07:00 revert to chk_gpu command for dynamic changes
+#2021/12/22 19:40:00 correct error computation of 2d jobs
 
 start=`date +%s`
 
@@ -122,7 +123,7 @@ case $1 in
         (
         num_double="$(echo  "$ginfo2" |  grep '[1-9][0-9][0-9](d)' | grep -o '[ ]' | wc -l)"
         num_d_jobs="$(echo "${num_double}/2" | bc )"
-        nfn="$(echo  "$ginfo2" |  grep  "[1-9][0-9][0-9](s)" | wc -l)"
+        nfn="$(echo  "$ginfo2" |  grep  "[1-9][0-9][0-9](d)" | wc -l)"
         nfj="$(echo "${nfn}*4" |  bc )"
         w_jobs="$(echo "$qinfo2" | grep -o '2:d' | wc -l)"
         echo $num_d_jobs $nfj $w_jobs
