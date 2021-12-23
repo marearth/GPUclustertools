@@ -42,79 +42,79 @@ do
 done	< $QSTAT_F
 
 
-echo -e "\nGPU used detail:"
-echo "--1080Ti--  Valid type: 1:S  2:D  4:Q  8:E  ----"
-echo "         0  1  2  3  4  5  6  7"
-#for ((i=1;i<=$NodeNum;i++))
-for i in {1..6} {8..20} {22..25}
-do
-   #echo -ne "GPU10$i:\t"
-   #printf "Gpu1%02d:\t" $i
-   NODEI=`printf "G1%02d" $i`
-   PROP=`/usr/local/bin/pbsnodes -x  $NODEI|sed -n 's/.*<properties>\(.*\)<\/properties>.*/\1/p'`
-   printf "1%02d($PROP):\t" $i 
+# echo -e "\nGPU used detail:"
+# echo "--1080Ti--  Valid type: 1:S  2:D  4:Q  8:E  ----"
+# echo "         0  1  2  3  4  5  6  7"
+# #for ((i=1;i<=$NodeNum;i++))
+# for i in {1..6} {8..20} {22..25}
+# do
+#    #echo -ne "GPU10$i:\t"
+#    #printf "Gpu1%02d:\t" $i
+#    NODEI=`printf "G1%02d" $i`
+#    PROP=`/usr/local/bin/pbsnodes -x  $NODEI|sed -n 's/.*<properties>\(.*\)<\/properties>.*/\1/p'`
+#    printf "1%02d($PROP):\t" $i 
 
-   AVGPU=`pbsnodes $NODEI|grep gpus |cut -d'=' -f2`
-   for((j=0;j<8;j++))
-    do
-     [ $j -ge $AVGPU ] && break
-     #[ $i -eq 8 ] && [ $j -ge 7 ] && break
-     #[ $i -eq 21 ] && [ $j -ge 7 ] && break
-     #[ $i -eq 22 ] && [ $j -ge 7 ] && break
-     #[ $i -eq 13 ] && [ $j -ge 7 ] && break
-     eval tmp=\${GPU$i[$j]}
-     #[ $j == "2" ] && echo -ne " | "
-     [ "x"$tmp == "x1" ] && echo -n "[x]" || echo -n "[ ]" 
-    done
-    echo
-done
-echo ""
-echo "--2080Ti--  Valid type: 1:s  2:d  4:q  8:e ----"
-echo "         0  1  2  3  4  5  6  7 "
-for i in {71..86}
-do
+#    AVGPU=`pbsnodes $NODEI|grep gpus |cut -d'=' -f2`
+#    for((j=0;j<8;j++))
+#     do
+#      [ $j -ge $AVGPU ] && break
+#      #[ $i -eq 8 ] && [ $j -ge 7 ] && break
+#      #[ $i -eq 21 ] && [ $j -ge 7 ] && break
+#      #[ $i -eq 22 ] && [ $j -ge 7 ] && break
+#      #[ $i -eq 13 ] && [ $j -ge 7 ] && break
+#      eval tmp=\${GPU$i[$j]}
+#      #[ $j == "2" ] && echo -ne " | "
+#      [ "x"$tmp == "x1" ] && echo -n "[x]" || echo -n "[ ]" 
+#     done
+#     echo
+# done
+# echo ""
+# echo "--2080Ti--  Valid type: 1:s  2:d  4:q  8:e ----"
+# echo "         0  1  2  3  4  5  6  7 "
+# for i in {71..86}
+# do
 
-   NODEI=`printf "G1%02d" $i`
-   PROP=`/usr/local/bin/pbsnodes -x  $NODEI|sed -n 's/.*<properties>\(.*\)<\/properties>.*/\1/p'`
-   printf "1%02d($PROP):\t" $i
+#    NODEI=`printf "G1%02d" $i`
+#    PROP=`/usr/local/bin/pbsnodes -x  $NODEI|sed -n 's/.*<properties>\(.*\)<\/properties>.*/\1/p'`
+#    printf "1%02d($PROP):\t" $i
 
-   AVGPU=`pbsnodes $NODEI|grep gpus |cut -d'=' -f2`
-   for((j=0;j<8;j++))
-    do
-     [ $j -ge $AVGPU ] && break
-     #[ $i -le 32 ] && [ $j -ge 4 ] && break
-     #[ $i -le 37 ] && [ $j -ge 8 ] && break
-     #[ $i -eq 39 ] && [ $j -eq 15 ] && break
-     #[ $i -eq 44 ] && [ $j -ge 8 ] && break
-     eval tmp=\${GPU$i[$j]}
-     [ "x"$tmp == "x1" ] && echo -n "[x]" || echo -n "[ ]"
-    done
-    echo
-done
+#    AVGPU=`pbsnodes $NODEI|grep gpus |cut -d'=' -f2`
+#    for((j=0;j<8;j++))
+#     do
+#      [ $j -ge $AVGPU ] && break
+#      #[ $i -le 32 ] && [ $j -ge 4 ] && break
+#      #[ $i -le 37 ] && [ $j -ge 8 ] && break
+#      #[ $i -eq 39 ] && [ $j -eq 15 ] && break
+#      #[ $i -eq 44 ] && [ $j -ge 8 ] && break
+#      eval tmp=\${GPU$i[$j]}
+#      [ "x"$tmp == "x1" ] && echo -n "[x]" || echo -n "[ ]"
+#     done
+#     echo
+# done
 
-echo ""
-echo "--3090/3080Ti-- Valid type: 1:A  2:B  4:C  8:F ----"
-echo "         0  1  2  3  4  5  6  7 "
-for i in 7 21 {31..38}
-do
+# echo ""
+# echo "--3090/3080Ti-- Valid type: 1:A  2:B  4:C  8:F ----"
+# echo "         0  1  2  3  4  5  6  7 "
+# for i in 7 21 {31..38}
+# do
 
-   NODEI=`printf "G1%02d" $i`
-   PROP=`/usr/local/bin/pbsnodes -x  $NODEI|sed -n 's/.*<properties>\(.*\)<\/properties>.*/\1/p'`
-   printf "1%02d($PROP):\t" $i
+#    NODEI=`printf "G1%02d" $i`
+#    PROP=`/usr/local/bin/pbsnodes -x  $NODEI|sed -n 's/.*<properties>\(.*\)<\/properties>.*/\1/p'`
+#    printf "1%02d($PROP):\t" $i
 
-   AVGPU=`pbsnodes $NODEI|grep gpus |cut -d'=' -f2`
-   for((j=0;j<8;j++))
-    do
-     [ $j -ge $AVGPU ] && break
-     #[ $i -eq 44 ] && [ $j -ge 8 ] && break
-     eval tmp=\${GPU$i[$j]}
-     [ "x"$tmp == "x1" ] && echo -n "[x]" || echo -n "[ ]"
-    done
-    echo
-done
+#    AVGPU=`pbsnodes $NODEI|grep gpus |cut -d'=' -f2`
+#    for((j=0;j<8;j++))
+#     do
+#      [ $j -ge $AVGPU ] && break
+#      #[ $i -eq 44 ] && [ $j -ge 8 ] && break
+#      eval tmp=\${GPU$i[$j]}
+#      [ "x"$tmp == "x1" ] && echo -n "[x]" || echo -n "[ ]"
+#     done
+#     echo
+# done
 
-echo -e "\nTotal $n jobs."
+# echo -e "\nTotal $n jobs."
 
-#echo -e "\n1080Ti Gpu node:{G101-G125}, K80 Gpu node:{G131-G144}"
-echo  " "
-rm -f $QSTAT_F
+# #echo -e "\n1080Ti Gpu node:{G101-G125}, K80 Gpu node:{G131-G144}"
+# echo  " "
+# rm -f $QSTAT_F

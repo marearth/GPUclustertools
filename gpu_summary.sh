@@ -20,17 +20,22 @@
 #2021/11/11 15:52:00 add support for RTX 3080 Ti GPU
 #2021/12/22 16:07:00 revert to chk_gpu command for dynamic changes
 #2021/12/22 19:40:00 correct error computation of 2d jobs
+#2021/12/23 20:33:00 optimized performance by reusing chk_gpu script
 
 start=`date +%s`
 
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
+chk_gpu_file="$(which chk_gpu)"
+cat ${__dir}/gpu_used.sh > ${__dir}/gpu_used_temp.sh
+chmod +x ${__dir}/gpu_used_temp.sh
+(cat ${chk_gpu_file} | sed -n '/GPU used detail/,$p') >> ${__dir}/gpu_used_temp.sh
 
 echo "-------------------Number of GPU jobs--------------------"
 
 
 (
-chk_gpu | sed -n '/GPU used detail/,$p'
+# chk_gpu | sed -n '/GPU used detail/,$p'
+bash ${__dir}/gpu_used_temp.sh
 ) > ${__dir}/gs_gused_info.temp &
 
 (
@@ -215,6 +220,7 @@ case $1 in
 esac
 
 rm ${__dir}/gs*.temp
+rm ${__dir}/gpu_used_temp.sh
 end=`date +%s`
 runtime=$((end-start))
 echo "runtime:" $runtime"s"
